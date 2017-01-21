@@ -13,7 +13,6 @@ $ make
 ``` 
 $ mspdebug 
 ```
-
 In mspdebug prompt
 ```
 (mspdebug) prog blink.elf
