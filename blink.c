@@ -2,28 +2,55 @@
 
 #include <msp430g2553.h>
 
-#define LED2_MASK       0x40
+// configure clocks
+void configure_clocks()
+{
+    // Stop watchdog
+    WDTCTL = WDTPW + WDTHOLD;
+    BCSCTL1 = CALBC1_16MHZ;
+    DCOCTL = CALDCO_16MHZ;
+}
+
+// delay in microseconds
+void delay_us(unsigned int us)
+{
+    while (us)
+    {
+        // 1 for 1 Mhz set 16 for 16 MHz
+        __delay_cycles(16);
+        us--;
+    }
+}
+
+// delay in miliseconds
+void delay_ms(unsigned int ms)
+{
+    while (ms)
+    {
+        // 1000 for 1MHz and 16000 for 16MHz
+        __delay_cycles(16000);
+        ms--;
+    }
+}
  
 int main(void)
 {
-  volatile int i = 0;
 
-  /* stop watchdog timer */
-  WDTCTL = WDTPW | WDTHOLD;
+    configure_clocks();
 
-  /* set P1 direction */
-  P1DIR = LED2_MASK;
+    /* set P1 direction */
+    P1DIR |= 0x41;
 
-  /* leds off */
-  P1OUT = 0x00;
+    /* leds off */
+    P1OUT = 0x40;
 
-  for (;;)
-  {
-    /* toggle leds */
-    P1OUT ^= (LED2_MASK);
+    while(1)
+    {
+        /* toggle leds */
+        P1OUT ^= 0x41;
 
-    /* delay */
-    for (i = 0; i < 10000; i++);
-  }
+        /* delay */
+        delay_ms(500);
+    }
   
 }

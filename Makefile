@@ -1,7 +1,7 @@
 # Makefile
 
 MCU = msp430g2553
-INCLUDE_DIR = $$MSP_HOME/msp430_gcc/include/
+INCLUDE_DIR = $$MSP_HOME/msp430-gcc/include/
 
 IFLAGS = -I $(INCLUDE_DIR)
 LFLAGS = -L $(INCLUDE_DIR)
